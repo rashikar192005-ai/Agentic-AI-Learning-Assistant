@@ -1,0 +1,138 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nMy name is Rashika. How can I assist you today?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a0630aec-a335-4bd7-a514-930699c9f495",
+      "name": "When chat message received",
+      "webhookId": "16eff23a-c384-4e84-9757-9954960a5f46"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpYou are an AI Learning Assistant for college students.\n\nRules:\n- Explain topics in simple English.\n- Give examples whenever possible.\n- If asked for interview questions, provide at least 5.\n- If asked to summarize, make short notes.\n- Be friendly and accurate.ful assistant"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "fa24429d-363b-43ad-97ff-5310ca332796",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "c31fcc5a-cef0-4fda-9fec-edcbec57dd86",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UhrF7zqOr2cgFXWO",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        224,
+        208
+      ],
+      "id": "159fd4c3-67e7-4845-88ce-cfecb9cc97e0",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        368,
+        208
+      ],
+      "id": "4bf95d9b-381f-47f8-9593-d92bdf0ace2c",
+      "name": "Calculator"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "d92ef1a8-cefb-4bb8-bb80-6fab85bc6be4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "02c3a09b0b15f444105e460836ff03ce3a05b8db07b57a7511add1d60c56fc43"
+  },
+  "nodeGroups": [],
+  "id": "7Xug4ZxdhkIZggK2",
+  "tags": []
+}
